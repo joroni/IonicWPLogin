@@ -1,0 +1,15 @@
+.platform-android .bar .title {
+    font-size: 19px;
+    line-height: 44px;
+    padding: 5px 5px 10px 5px;
+}
+
+
+ion-content.main-content{
+    padding: 10px;
+}
+
+
+ion-content..sidebar-left {
+    padding: 0;
+}

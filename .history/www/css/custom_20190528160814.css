@@ -1,0 +1,10 @@
+.platform-android .bar .title {
+    font-size: 19px;
+    line-height: 44px;
+    padding: 5px 5px 10px 5px;
+}
+
+
+ion-content.scroll-content.ionic-scroll.overflow-scroll.has-header {
+    padding: 10px;
+}
