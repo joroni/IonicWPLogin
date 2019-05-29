@@ -110,15 +110,14 @@ angular.module('starter.controllers', [])
         contentType: "application/json; charset=utf-8"
       }).then(function successCallback(obj) {
         responseText = [obj.data]; // response data 
-        $scope.authItems = responseText;
-        var user = responseText;
-        console.log('user',user);
-        localStorage.setItem('auth', JSON.stringify(user));
-      //  var authItems = JSON.parse(localStorage.getItem('auth'));
+        var names = responseText;
+        console.log(names);
+        localStorage.setItem('auth', JSON.stringify(names));
+        var str1 = JSON.parse(localStorage.getItem('auth'));
         /*  var str2 = "filtering";
          var str3 = str1.replace(str2, ""); */
       // var nonce = str1;
-     //   console.log('authItems');
+        console.log(str1);
       });
 /* 
       $http({

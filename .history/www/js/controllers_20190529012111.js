@@ -110,15 +110,28 @@ angular.module('starter.controllers', [])
         contentType: "application/json; charset=utf-8"
       }).then(function successCallback(obj) {
         responseText = [obj.data]; // response data 
-        $scope.authItems = responseText;
         var user = responseText;
         console.log('user',user);
-        localStorage.setItem('auth', JSON.stringify(user));
-      //  var authItems = JSON.parse(localStorage.getItem('auth'));
+        if (responseText.status === "ok" ){
+          localStorage.setItem('auth', JSON.stringify(user));
+          var authItems = JSON.parse(localStorage.getItem('auth'));
+          $scope.authItems = authItems;
+          console.log('authItems', authItems);
+          alert('ok');
+          $scope.closeLogin();
+                  }else{
+                    
+                      $scope.modal.show();
+                
+                  }
+        
+
+        
         /*  var str2 = "filtering";
          var str3 = str1.replace(str2, ""); */
       // var nonce = str1;
-     //   console.log('authItems');
+        
+       
       });
 /* 
       $http({
@@ -153,9 +166,9 @@ angular.module('starter.controllers', [])
 
       }); */
 
-      console.log(loginData);
+     
       console.log('Doing login', $scope.loginData);
-
+      localStorage.setItem('secret', $scope.loginData);
 
       $timeout(function () {
         $scope.closeLogin();

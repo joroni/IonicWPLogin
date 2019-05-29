@@ -110,53 +110,64 @@ angular.module('starter.controllers', [])
         contentType: "application/json; charset=utf-8"
       }).then(function successCallback(obj) {
         responseText = [obj.data]; // response data 
-        $scope.authItems = responseText;
         var user = responseText;
-        console.log('user',user);
+        console.log('user', user);
+        console.log(loginData);
+        console.log('Doing login', $scope.loginData);
+        localStorage.setItem('secret', JSON.stringify($scope.loginData));
         localStorage.setItem('auth', JSON.stringify(user));
-      //  var authItems = JSON.parse(localStorage.getItem('auth'));
+        var authItems = JSON.parse(localStorage.getItem('auth'));
+        $scope.authItems = authItems;
+        console.log('authItems', authItems);
+        if (responseText.status !== "ok") {
+          $scope.modal.show();
+          
+        } else {
+          alert('ok');
+        }
+       
+
+
         /*  var str2 = "filtering";
          var str3 = str1.replace(str2, ""); */
-      // var nonce = str1;
-     //   console.log('authItems');
+        // var nonce = str1;
+
+
       });
-/* 
-      $http({
-        method: "GET",
-        url: $base_url + '/api/user/generate_auth_cookie/?username=' + $scope.loginData.username + '&password=' + $scope.loginData.password + '&insecure=cool',
-        data: loginData,
-        async: true,
-        beforeSend: function () {
-          $.mobile.loading('show');
-        },
-        complete: function (loginData) {
-          $.mobile.loading('hide');
+      /* 
+            $http({
+              method: "GET",
+              url: $base_url + '/api/user/generate_auth_cookie/?username=' + $scope.loginData.username + '&password=' + $scope.loginData.password + '&insecure=cool',
+              data: loginData,
+              async: true,
+              beforeSend: function () {
+                $.mobile.loading('show');
+              },
+              complete: function (loginData) {
+                $.mobile.loading('hide');
 
-          console.log('loginData', loginData.responseText);
-          var str1 = loginData.responseText;
-          var str2 = "filtering"
-          var str3 = str1.replace(str2, "");
-          localStorage.setItem("auth", str3);
+                console.log('loginData', loginData.responseText);
+                var str1 = loginData.responseText;
+                var str2 = "filtering"
+                var str3 = str1.replace(str2, "");
+                localStorage.setItem("auth", str3);
 
-          var lol2 = localStorage.getItem("auth");
-          var lol3 = JSON.parse(lol2);
-          console.log(lol3);
-          if (lol3.status == "error") {
-            alert('Login failed. Please try again!');
-          } else {
-            $.mobile.changePage("#index", {
-              transition: "slide"
-            });
-          }
-        },
-
-
-      }); */
-
-      console.log(loginData);
-      console.log('Doing login', $scope.loginData);
+                var lol2 = localStorage.getItem("auth");
+                var lol3 = JSON.parse(lol2);
+                console.log(lol3);
+                if (lol3.status == "error") {
+                  alert('Login failed. Please try again!');
+                } else {
+                  $.mobile.changePage("#index", {
+                    transition: "slide"
+                  });
+                }
+              },
 
 
+            }); */
+
+      
       $timeout(function () {
         $scope.closeLogin();
       }, 1000);

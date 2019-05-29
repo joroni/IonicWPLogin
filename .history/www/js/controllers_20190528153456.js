@@ -27,31 +27,31 @@ angular.module('starter.controllers', [])
       var names = responseText;
       console.log(names);
       localStorage.setItem('nonce', JSON.stringify(names));
-      var str1 = JSON.parse(localStorage.getItem('nonce'));
-      /*  var str2 = "filtering";
-       var str3 = str1.replace(str2, ""); */
+      var str1 =  JSON.parse(localStorage.getItem('nonce'));
+     /*  var str2 = "filtering";
+      var str3 = str1.replace(str2, ""); */
       var nonce = str1;
       console.log(nonce);
     });
 
-
-    /*    $http.get($base_url + '/api/get_nonce/?controller=user&method=generate_auth_cookie')
-       .then(function (response){
-         $scope.jsondata = [response.data.data];
-         var responseText = $scope.jsondata;
-         console.log("status:" + responseText.status);
-               var names = responseText;
-               localStorage.setItem('nonce', names);
-               var str1 = names;
-               var str2 = "filtering";
-               var str3 = str1.replace(str2, "");
-               var nonce = JSON.parse(str3)
-               console.log('nonce:', nonce);
-       }).catch(function(response) {
-         console.error('Error occurred:', response.status, response.data);
-       }).finally(function() {
-          console.log("Task Finished.");
-       }); */
+    
+   /*    $http.get($base_url + '/api/get_nonce/?controller=user&method=generate_auth_cookie')
+      .then(function (response){
+        $scope.jsondata = [response.data.data];
+        var responseText = $scope.jsondata;
+        console.log("status:" + responseText.status);
+              var names = responseText;
+              localStorage.setItem('nonce', names);
+              var str1 = names;
+              var str2 = "filtering";
+              var str3 = str1.replace(str2, "");
+              var nonce = JSON.parse(str3)
+              console.log('nonce:', nonce);
+      }).catch(function(response) {
+        console.error('Error occurred:', response.status, response.data);
+      }).finally(function() {
+         console.log("Task Finished.");
+      }); */
     /* $scope.nonceGet = function($scope,){
 
 
@@ -103,24 +103,7 @@ angular.module('starter.controllers', [])
 
     // Perform the login action when the user submits the login form
     $scope.doLogin = function (loginData) {
-      $http({
-        method: 'POST',
-        url: $base_url + '/api/user/generate_auth_cookie/?username=' + $scope.loginData.username + '&password=' + $scope.loginData.password + '&insecure=cool',
-        dataType: "json",
-        contentType: "application/json; charset=utf-8"
-      }).then(function successCallback(obj) {
-        responseText = [obj.data]; // response data 
-        $scope.authItems = responseText;
-        var user = responseText;
-        console.log('user',user);
-        localStorage.setItem('auth', JSON.stringify(user));
-      //  var authItems = JSON.parse(localStorage.getItem('auth'));
-        /*  var str2 = "filtering";
-         var str3 = str1.replace(str2, ""); */
-      // var nonce = str1;
-     //   console.log('authItems');
-      });
-/* 
+
       $http({
         method: "GET",
         url: $base_url + '/api/user/generate_auth_cookie/?username=' + $scope.loginData.username + '&password=' + $scope.loginData.password + '&insecure=cool',
@@ -151,7 +134,7 @@ angular.module('starter.controllers', [])
         },
 
 
-      }); */
+      });
 
       console.log(loginData);
       console.log('Doing login', $scope.loginData);
