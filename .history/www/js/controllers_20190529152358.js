@@ -108,7 +108,6 @@ angular.module('starter.controllers', [])
 
 
     $scope.checkAuth = function () {
-     
         if(localStorage.secret !==''){
               var secretItems = JSON.parse(localStorage.getItem('secret'));
               $scope.loginCredentials = secretItems;
@@ -129,7 +128,6 @@ angular.module('starter.controllers', [])
               localStorage.setItem('auth', JSON.stringify(user));
             });
       }else{
-        localStorage.setItem("secret",JSON.stringify($scope.loginCredentialsTest));
         return false;
         
       }

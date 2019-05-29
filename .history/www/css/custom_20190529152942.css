@@ -19,7 +19,7 @@ ion-content.sidebar-left {
 }
 
 
-.menu .bar-header, .menu .scroll-content {
-   
+.menu .scroll-content {
+    z-index: 10;
     position: relative;
 }

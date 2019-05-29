@@ -1,4 +1,7 @@
-
+var loginCredentials = {
+  username: "",
+  password: ""
+}
 //$base_url = "http://178.128.63.151/bnext2";
 $base_url = "https://justinpineda.com";
 
@@ -12,15 +15,7 @@ angular.module('starter.controllers', [])
     // listen for the $ionicView.enter event:
     //$scope.$on('$ionicView.enter', function(e) {
     //});
-    $scope.loginCredentials = {
-      username: "",
-      password: ""
-    }
 
-    $scope.loginCredentialsTest = {
-      username: "test",
-      password: "test"
-    }
 
     $http({
       method: 'GET',
@@ -106,49 +101,6 @@ angular.module('starter.controllers', [])
       $scope.modal.show();
     };
 
-
-    $scope.checkAuth = function () {
-     
-        if(localStorage.secret !==''){
-              var secretItems = JSON.parse(localStorage.getItem('secret'));
-              $scope.loginCredentials = secretItems;
-              $scope.uname = $scope.loginCredentials.username;
-              $scope.keys = $scope.loginCredentials.password;
-              $http({
-              method: 'POST',
-              url: $base_url + '/api/user/generate_auth_cookie/?username=' + $scope.uname + '&password=' + $scope.keys + '&insecure=cool',
-              dataType: "json",
-              contentType: "application/json; charset=utf-8"
-            }).then(function successCallback(obj) {
-              responseText = [obj.data]; // response data 
-              $scope.authItems = responseText;
-              var user = responseText;
-              $scope.status = responseText[0].status;
-              console.log('user', user);
-              console.log('Doing status', responseText[0].status);
-              localStorage.setItem('auth', JSON.stringify(user));
-            });
-      }else{
-        localStorage.setItem("secret",JSON.stringify($scope.loginCredentialsTest));
-        return false;
-        
-      }
-
-      /*   var getCredentials=  JSON.parse(localStorage.getItem('auth'));
-        var itemCredentials=  getCredentials;
-        $scope.status = responseText[0].status; */
-      /*  if(itemCredentials.status !=="error"){
-         console.log(itemCredentials.username);
-       }
-       else{
-         $timeout(function () {
-           $scope.login();
-         }, 1000);
-       } */
-    }
-
-    $scope.checkAuth();
-
     // Perform the login action when the user submits the login form
     $scope.doLogin = function (loginData) {
       $http({
@@ -159,13 +111,7 @@ angular.module('starter.controllers', [])
       }).then(function successCallback(obj) {
         responseText = [obj.data]; // response data 
         $scope.authItems = responseText;
-        var user = responseText;
-        $scope.status = responseText[0].status;
-        console.log('user', user);
-        console.log('Doing status', responseText[0].status);
-        localStorage.setItem('auth', JSON.stringify(user));
-
-        /*  if (responseText.status == "error") {
+        if (responseText.status == "error") {
           console.log(responseText.status);
           alert('Login failed. Please try again!');
         } else {
@@ -173,53 +119,48 @@ angular.module('starter.controllers', [])
           console.log('user',user);
           localStorage.setItem('auth', JSON.stringify(user));
       
-        } */
-        //  var authItems = JSON.parse(localStorage.getItem('auth'));
+        }
+       //  var authItems = JSON.parse(localStorage.getItem('auth'));
         /*  var str2 = "filtering";
          var str3 = str1.replace(str2, ""); */
-        // var nonce = str1;
-        //   console.log('authItems');
-        // console.log(loginData);
-        console.log('Doing login', $scope.loginData);
-
-        localStorage.setItem('secret', JSON.stringify($scope.loginData));
-      }).then(function error(obj) {
-
-
+      // var nonce = str1;
+     //   console.log('authItems');
       });
-      /* 
-            $http({
-              method: "GET",
-              url: $base_url + '/api/user/generate_auth_cookie/?username=' + $scope.loginData.username + '&password=' + $scope.loginData.password + '&insecure=cool',
-              data: loginData,
-              async: true,
-              beforeSend: function () {
-                $.mobile.loading('show');
-              },
-              complete: function (loginData) {
-                $.mobile.loading('hide');
+/* 
+      $http({
+        method: "GET",
+        url: $base_url + '/api/user/generate_auth_cookie/?username=' + $scope.loginData.username + '&password=' + $scope.loginData.password + '&insecure=cool',
+        data: loginData,
+        async: true,
+        beforeSend: function () {
+          $.mobile.loading('show');
+        },
+        complete: function (loginData) {
+          $.mobile.loading('hide');
 
-                console.log('loginData', loginData.responseText);
-                var str1 = loginData.responseText;
-                var str2 = "filtering"
-                var str3 = str1.replace(str2, "");
-                localStorage.setItem("auth", str3);
+          console.log('loginData', loginData.responseText);
+          var str1 = loginData.responseText;
+          var str2 = "filtering"
+          var str3 = str1.replace(str2, "");
+          localStorage.setItem("auth", str3);
 
-                var lol2 = localStorage.getItem("auth");
-                var lol3 = JSON.parse(lol2);
-                console.log(lol3);
-                if (lol3.status == "error") {
-                  alert('Login failed. Please try again!');
-                } else {
-                  $.mobile.changePage("#index", {
-                    transition: "slide"
-                  });
-                }
-              },
+          var lol2 = localStorage.getItem("auth");
+          var lol3 = JSON.parse(lol2);
+          console.log(lol3);
+          if (lol3.status == "error") {
+            alert('Login failed. Please try again!');
+          } else {
+            $.mobile.changePage("#index", {
+              transition: "slide"
+            });
+          }
+        },
 
 
-            }); */
+      }); */
 
+      console.log(loginData);
+      console.log('Doing login', $scope.loginData);
 
 
       $timeout(function () {

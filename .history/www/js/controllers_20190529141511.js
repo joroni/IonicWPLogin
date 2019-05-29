@@ -1,4 +1,7 @@
-
+var loginCredentials = {
+  username: "",
+  password: ""
+}
 //$base_url = "http://178.128.63.151/bnext2";
 $base_url = "https://justinpineda.com";
 
@@ -12,15 +15,8 @@ angular.module('starter.controllers', [])
     // listen for the $ionicView.enter event:
     //$scope.$on('$ionicView.enter', function(e) {
     //});
-    $scope.loginCredentials = {
-      username: "",
-      password: ""
-    }
 
-    $scope.loginCredentialsTest = {
-      username: "test",
-      password: "test"
-    }
+
 
     $http({
       method: 'GET',
@@ -108,12 +104,10 @@ angular.module('starter.controllers', [])
 
 
     $scope.checkAuth = function () {
-     
         if(localStorage.secret !==''){
               var secretItems = JSON.parse(localStorage.getItem('secret'));
-              $scope.loginCredentials = secretItems;
-              $scope.uname = $scope.loginCredentials.username;
-              $scope.keys = $scope.loginCredentials.password;
+              $scope.uname = secretItems.username;
+              $scope.keys = secretItems.password;
               $http({
               method: 'POST',
               url: $base_url + '/api/user/generate_auth_cookie/?username=' + $scope.uname + '&password=' + $scope.keys + '&insecure=cool',
@@ -129,9 +123,8 @@ angular.module('starter.controllers', [])
               localStorage.setItem('auth', JSON.stringify(user));
             });
       }else{
-        localStorage.setItem("secret",JSON.stringify($scope.loginCredentialsTest));
-        return false;
-        
+        secretItems.username = "";
+        secretItems.password = "";
       }
 
       /*   var getCredentials=  JSON.parse(localStorage.getItem('auth'));

@@ -17,3 +17,9 @@ ion-content.sidebar-left {
 .capitalize {
     text-transform: capitalize;
 }
+
+
+.menu .bar-header, .menu .scroll-content {
+   
+    position: relative;
+}
