@@ -161,9 +161,9 @@ $http.get("url").then(function success(response) {
         url: $base_url + '/api/user/generate_auth_cookie/?username=' + $scope.loginData.username + '&password=' + $scope.loginData.password + '&insecure=cool',
         dataType: "json",
         contentType: "application/json; charset=utf-8"
-      }).then(function success(loginData) {
-      
-        responseText = [loginData.data]; // response data 
+      }).then(function success(obj) {
+        isLoggedIn = true;
+        responseText = [obj.data]; // response data 
         $scope.authItems = responseText;
         var user = responseText;
         $scope.status = responseText[0].status;
@@ -177,7 +177,7 @@ $http.get("url").then(function success(response) {
 
         localStorage.setItem('secret', JSON.stringify($scope.loginData));
         return false;
-      }, function error(loginData) {
+      }, function error(obj) {
         isLoggedIn = false;
         console.log('isLoggedIn', isLoggedIn);
         return false;

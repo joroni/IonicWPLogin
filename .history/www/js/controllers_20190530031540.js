@@ -11,29 +11,31 @@ angular.module('starter.controllers', [])
     // listen for the $ionicView.enter event:
     //$scope.$on('$ionicView.enter', function(e) {
     //});
+    if (localStorage.secret == '') {
     $scope.loginCredentials = {
       username: "test",
       password: "test"
-    }
+    },
+  }
     //$scope.myauth = function () {
-    /*  if (localStorage.secret == '') {
-       $scope.loginCredentials = {
-         username: "test",
-         password: "test"
-       }
-        console.log($scope.loginCredentials);
-      /*  $timeout(function () {
-        
-         localStorage.setItem('secret', JSON.stringify($scope.loginCredentials));
-       $scope.secretItems = JSON.parse(localStorage.getItem('secret'));
+     /*  if (localStorage.secret == '') {
+        $scope.loginCredentials = {
+          username: "test",
+          password: "test"
+        }
+         console.log($scope.loginCredentials);
+       /*  $timeout(function () {
+         
+          localStorage.setItem('secret', JSON.stringify($scope.loginCredentials));
+        $scope.secretItems = JSON.parse(localStorage.getItem('secret'));
 
-       }, 1000); *
-     
-     } else {
-       localStorage.setItem('secret', JSON.stringify($scope.loginData));
-     } */
+        }, 1000); *
+      
+      } else {
+        localStorage.setItem('secret', JSON.stringify($scope.loginData));
+      } */
 
-    //  }
+  //  }
 
 
     $http({
@@ -94,9 +96,9 @@ angular.module('starter.controllers', [])
 
 
     $scope.checkAuth = function () {
-      //  $scope.myauth();
+    //  $scope.myauth();
 
-      // $scope.secretItems = JSON.parse(localStorage.getItem('secret'));
+     // $scope.secretItems = JSON.parse(localStorage.getItem('secret'));
       //console.log('secretItems', $scope.secretItems);
       /*   if (localStorage.secret !== '') {
         $scope.secretItems = JSON.parse(localStorage.getItem('secret'));
@@ -120,38 +122,24 @@ angular.module('starter.controllers', [])
         isLoggedIn = true;
         console.log('isLoggedIn', isLoggedIn);
         return false;
-      }, function error(obj) {
+      }, function error() {
         isLoggedIn = false;
         console.log('isLoggedIn', isLoggedIn);
         //localStorage.setItem("secret", JSON.stringify($scope.loginCredentials));
-        let keysToRemove = ["secret"];
+        let keysToRemove = [ "secret"];
 
-        for (key of keysToRemove) {
-          localStorage.removeItem(key);
-        }
-        $timeout(function () {
-          $scope.login();
-        }, 1000);
-        return false;
+          for (key of keysToRemove) {
+            localStorage.removeItem(key);
+          }
+            $timeout(function () {
+              $scope.login();
+            }, 1000);
+            return false;
 
-      })
+          })
     }
 
 
-
-
-
-    /*  // Simple GET request example:
-
-$http.get("url").then(function success(response) {
-
-  // this function will be called when the request is success
-  
-  }, function error(response) {
-  
-  // this function will be called when the request returned error status
-  
-  }); */
     $scope.checkAuth();
 
     // Perform the login action when the user submits the login form
@@ -161,9 +149,9 @@ $http.get("url").then(function success(response) {
         url: $base_url + '/api/user/generate_auth_cookie/?username=' + $scope.loginData.username + '&password=' + $scope.loginData.password + '&insecure=cool',
         dataType: "json",
         contentType: "application/json; charset=utf-8"
-      }).then(function success(loginData) {
-      
-        responseText = [loginData.data]; // response data 
+      }).then(function success(obj) {
+        isLoggedIn = true;
+        responseText = [obj.data]; // response data 
         $scope.authItems = responseText;
         var user = responseText;
         $scope.status = responseText[0].status;
@@ -177,7 +165,7 @@ $http.get("url").then(function success(response) {
 
         localStorage.setItem('secret', JSON.stringify($scope.loginData));
         return false;
-      }, function error(loginData) {
+      }, function error(obj) {
         isLoggedIn = false;
         console.log('isLoggedIn', isLoggedIn);
         return false;
@@ -185,18 +173,18 @@ $http.get("url").then(function success(response) {
 
 
 
-      /* 
-            // Simple GET request example:
+/* 
+      // Simple GET request example:
 
-      $http.get("url").then(function success(response) {
+$http.get("url").then(function success(response) {
 
-        // this function will be called when the request is success
-        
-        }, function error(response) {
-        
-        // this function will be called when the request returned error status
-        
-        }); */
+  // this function will be called when the request is success
+  
+  }, function error(response) {
+  
+  // this function will be called when the request returned error status
+  
+  }); */
 
 
 
