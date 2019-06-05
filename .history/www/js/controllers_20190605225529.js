@@ -13,8 +13,8 @@ angular.module('starter.controllers', [])
       $scope.checkAuth();
     });
     $scope.loginCredentials = {
-      //username: null,
-      //password: null
+      username: null,
+      password: null
     }
     //$scope.myauth = function () {
     /*  if (localStorage.secret == '') {

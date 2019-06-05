@@ -13,8 +13,8 @@ angular.module('starter.controllers', [])
       $scope.checkAuth();
     });
     $scope.loginCredentials = {
-      //username: null,
-      //password: null
+      username: null,
+      password: null
     }
     //$scope.myauth = function () {
     /*  if (localStorage.secret == '') {
@@ -126,11 +126,11 @@ angular.module('starter.controllers', [])
           isLoggedIn = false;
           console.log('isLoggedIn', isLoggedIn);
           //localStorage.setItem("secret", JSON.stringify($scope.loginCredentials));
-         /*  let keysToRemove = ["secret"];
+          let keysToRemove = ["secret"];
 
           for (key of keysToRemove) {
             localStorage.removeItem(key);
-          } */
+          }
           $timeout(function () {
             $scope.login();
           }, 1000);
@@ -182,7 +182,7 @@ $http.get("url").then(function success(response) {
             $scope.login();
           }, 1000);
         } else{
-        localStorage.setItem('auth', JSON.stringify($scope.user));
+        localStorage.setItem('auth', JSON.stringify($scop.checkAuthuser));
         isLoggedIn = true;
         console.log('isLoggedIn', isLoggedIn);
 

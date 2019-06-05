@@ -9,12 +9,11 @@ angular.module('starter.controllers', [])
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
-    $scope.$on('$ionicView.enter', function(e) {
-      $scope.checkAuth();
-    });
+    //$scope.$on('$ionicView.enter', function(e) {
+    //});
     $scope.loginCredentials = {
-      //username: null,
-      //password: null
+      username: null,
+      password: null
     }
     //$scope.myauth = function () {
     /*  if (localStorage.secret == '') {
@@ -95,8 +94,7 @@ angular.module('starter.controllers', [])
 
     }
 
-    
-      //});
+
 
     $scope.checkAuth = function () {
       //  $scope.myauth();
@@ -126,11 +124,11 @@ angular.module('starter.controllers', [])
           isLoggedIn = false;
           console.log('isLoggedIn', isLoggedIn);
           //localStorage.setItem("secret", JSON.stringify($scope.loginCredentials));
-         /*  let keysToRemove = ["secret"];
+          let keysToRemove = ["secret"];
 
           for (key of keysToRemove) {
             localStorage.removeItem(key);
-          } */
+          }
           $timeout(function () {
             $scope.login();
           }, 1000);
@@ -178,19 +176,18 @@ $http.get("url").then(function success(response) {
         if( $scope.status === "error"){
           isLoggedIn = false;
           console.log('isLoggedIn', isLoggedIn);
-          $timeout(function () {
-            $scope.login();
-          }, 1000);
-        } else{
-        localStorage.setItem('auth', JSON.stringify($scope.user));
+        } else{}
+        localStorage.setItem('auth', JSON.stringify(user));
         isLoggedIn = true;
         console.log('isLoggedIn', isLoggedIn);
 
         console.log('Doing login', $scope.loginData);
 
         localStorage.setItem('secret', JSON.stringify($scope.loginData));
-      }
-        
+        return false;
+      }, function error(loginData) {
+       
+        return false;
       });
 
 

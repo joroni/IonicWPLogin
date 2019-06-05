@@ -9,12 +9,11 @@ angular.module('starter.controllers', [])
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
-    $scope.$on('$ionicView.enter', function(e) {
-      $scope.checkAuth();
-    });
+    //$scope.$on('$ionicView.enter', function(e) {
+    //});
     $scope.loginCredentials = {
-      //username: null,
-      //password: null
+      username: null,
+      password: null
     }
     //$scope.myauth = function () {
     /*  if (localStorage.secret == '') {
@@ -42,7 +41,7 @@ angular.module('starter.controllers', [])
       url: $base_url + '/api/get_nonce/?controller=user&method=generate_auth_cookie',
       dataType: "json",
       contentType: "application/json; charset=utf-8"
-    }).then(function success(obj) {
+    }).then(function successCallback(obj) {
       responseText = [obj.data]; // response data 
       var names = responseText;
       console.log(names);
@@ -52,9 +51,6 @@ angular.module('starter.controllers', [])
        var str3 = str1.replace(str2, ""); */
       var nonce = str1;
       console.log(nonce);
-    }, function error(obj) {
-      alert("server down");
-
     });
 
 
@@ -95,18 +91,17 @@ angular.module('starter.controllers', [])
 
     }
 
-    
-      //});
+
 
     $scope.checkAuth = function () {
       //  $scope.myauth();
 
       // $scope.secretItems = JSON.parse(localStorage.getItem('secret'));
       //console.log('secretItems', $scope.secretItems);
-      if (localStorage.secret !== '') {
+        if (localStorage.secret !== '') {
         $scope.secretItems = JSON.parse(localStorage.getItem('secret'));
         // $scope.loginCredentials = secretItems;
-      } else {
+      }else{
         $scope.secretItems = JSON.parse($scope.loginCredentials);
       }
       $http({
@@ -117,28 +112,27 @@ angular.module('starter.controllers', [])
       }).then(function success(obj) {
         responseText = [obj.data]; // response data 
         $scope.authItems = responseText;
-        $scope.user = responseText;
+        var user = responseText;
         $scope.status = responseText[0].status;
-      }).then(function success(obj) {
-        console.log('user', $scope.user);
+        console.log('user', user);
         console.log('Doing status', responseText[0].status);
-        if (responseText[0].status === "error") {
-          isLoggedIn = false;
-          console.log('isLoggedIn', isLoggedIn);
-          //localStorage.setItem("secret", JSON.stringify($scope.loginCredentials));
-         /*  let keysToRemove = ["secret"];
+        localStorage.setItem('auth', JSON.stringify(user));
+        isLoggedIn = true;
+        console.log('isLoggedIn', isLoggedIn);
+        return false;
+      }, function error(obj) {
+        isLoggedIn = false;
+        console.log('isLoggedIn', isLoggedIn);
+        //localStorage.setItem("secret", JSON.stringify($scope.loginCredentials));
+        let keysToRemove = ["secret"];
 
-          for (key of keysToRemove) {
-            localStorage.removeItem(key);
-          } */
-          $timeout(function () {
-            $scope.login();
-          }, 1000);
-        } else {
-          localStorage.setItem('auth', JSON.stringify($scope.user));
-          isLoggedIn = true;
-          console.log('isLoggedIn', isLoggedIn);
+        for (key of keysToRemove) {
+          localStorage.removeItem(key);
         }
+        $timeout(function () {
+          $scope.login();
+        }, 1000);
+        return false;
 
       })
     }
@@ -168,29 +162,25 @@ $http.get("url").then(function success(response) {
         dataType: "json",
         contentType: "application/json; charset=utf-8"
       }).then(function success(loginData) {
-
+      
         responseText = [loginData.data]; // response data 
         $scope.authItems = responseText;
-        $scope.user = responseText;
+        var user = responseText;
         $scope.status = responseText[0].status;
-        console.log('user', $scope.user);
+        console.log('user', user);
         console.log('Doing status', responseText[0].status);
-        if( $scope.status === "error"){
-          isLoggedIn = false;
-          console.log('isLoggedIn', isLoggedIn);
-          $timeout(function () {
-            $scope.login();
-          }, 1000);
-        } else{
-        localStorage.setItem('auth', JSON.stringify($scope.user));
+        localStorage.setItem('auth', JSON.stringify(user));
         isLoggedIn = true;
         console.log('isLoggedIn', isLoggedIn);
 
         console.log('Doing login', $scope.loginData);
 
         localStorage.setItem('secret', JSON.stringify($scope.loginData));
-      }
-        
+        return false;
+      }, function error(loginData) {
+        isLoggedIn = false;
+        console.log('isLoggedIn', isLoggedIn);
+        return false;
       });
 
 
