@@ -36,6 +36,75 @@ angular.module('starter.controllers', [])
 
     //  }
 
+
+    $http({
+      method: 'GET',
+      url: $base_url + '/api/get_nonce/?controller=user&method=generate_auth_cookie',
+      dataType: "json",
+      contentType: "application/json; charset=utf-8"
+    }).then(function success(obj) {
+      responseText = [obj.data]; // response data 
+      var names = responseText;
+      console.log(names);
+      localStorage.setItem('nonce', JSON.stringify(names));
+      var str1 = JSON.parse(localStorage.getItem('nonce'));
+      /*  var str2 = "filtering";
+       var str3 = str1.replace(str2, ""); */
+      var nonce = str1;
+      console.log(nonce);
+    }, function error(obj) {
+      alert("server down");
+
+    });
+
+
+    if (localStorage.secret !== '') {
+      $scope.checkAuth();
+    
+    } else {
+      $timeout(function () {
+        $scope.login();
+      }, 1000);
+    }
+
+    // Form data for the login modal
+    $scope.loginData = {};
+
+    // Create the login modal that we will use later
+    $ionicModal.fromTemplateUrl('templates/login.html', {
+      scope: $scope
+    }).then(function (modal) {
+      $scope.modal = modal;
+    });
+
+    // Triggered in the login modal to close it
+    $scope.closeLogin = function () {
+      $scope.modal.hide();
+    };
+
+    // Open the login modal
+    $scope.login = function () {
+      $scope.modal.show();
+    };
+
+
+    $scope.logout = function () {
+      $scope.modal.show();
+      let keysToRemove = ["auth", "secret", "nonce"];
+
+      for (key of keysToRemove) {
+        localStorage.removeItem(key);
+      }
+
+      $timeout(function () {
+        $scope.login();
+      }, 1000);
+
+    }
+
+    
+      //});
+
     $scope.checkAuth = function () {
       //  $scope.myauth();
 
@@ -82,84 +151,6 @@ angular.module('starter.controllers', [])
     }
 
 
-
-
-    $http({
-      method: 'GET',
-      url: $base_url + '/api/get_nonce/?controller=user&method=generate_auth_cookie',
-      dataType: "json",
-      contentType: "application/json; charset=utf-8"
-    }).then(function success(obj) {
-      responseText = [obj.data]; // response data 
-      var names = responseText;
-      console.log(names);
-      localStorage.setItem('nonce', JSON.stringify(names));
-      var str1 = JSON.parse(localStorage.getItem('nonce'));
-      /*  var str2 = "filtering";
-       var str3 = str1.replace(str2, ""); */
-      var nonce = str1;
-      console.log(nonce);
-    }, function error(obj) {
-      alert("server down");
-
-    });
-
-
-    if (localStorage.secret !== '') {
-   
-     $scope.secretItems = JSON.parse(localStorage.getItem('secret'));
-      // $scope.checkAuth();
-      $timeout(function () {
-        $scope.checkAuth();
-      }, 2000);
-    } else {
-      $timeout(function () {
-        $scope.secretItems = JSON.parse(localStorage.getItem($scoipe.loginCredentials));
-       
-
-      }, 2000);
-      $scope.login();
-    }
-
-    // Form data for the login modal
-    $scope.loginData = {};
-
-    // Create the login modal that we will use later
-    $ionicModal.fromTemplateUrl('templates/login.html', {
-      scope: $scope
-    }).then(function (modal) {
-      $scope.modal = modal;
-    });
-
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function () {
-      $scope.modal.hide();
-    };
-
-    // Open the login modal
-    $scope.login = function () {
-      $scope.modal.show();
-    };
-
-
-    $scope.logout = function () {
-      $scope.modal.show();
-      let keysToRemove = ["auth", "secret", "nonce"];
-
-      for (key of keysToRemove) {
-        localStorage.removeItem(key);
-      }
-
-      $timeout(function () {
-        $scope.login();
-      }, 1000);
-
-    }
-
-    
-      //});
-
-    
 
 
 

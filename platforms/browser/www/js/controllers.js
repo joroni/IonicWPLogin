@@ -9,12 +9,12 @@ angular.module('starter.controllers', [])
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
-    $scope.$on('$ionicView.enter', function(e) {
+  /*   $scope.$on('$ionicView.enter', function(e) {
       $scope.checkAuth();
-    });
+    }); */
     $scope.loginCredentials = {
-      //username: null,
-      //password: null
+      username: "test",
+      password: "test"
     }
     //$scope.myauth = function () {
     /*  if (localStorage.secret == '') {
@@ -35,6 +35,53 @@ angular.module('starter.controllers', [])
      } */
 
     //  }
+
+    $scope.checkAuth = function () {
+      //  $scope.myauth();
+
+      // $scope.secretItems = JSON.parse(localStorage.getItem('secret'));
+      //console.log('secretItems', $scope.secretItems);
+    /*   if (localStorage.secret !== '') {
+        $scope.secretItems = JSON.parse(localStorage.getItem('secret'));
+      // $scope.loginCredentials = secretItems;
+      console.log( $scope.secretItems);
+      } else {
+        $scope.secretItems = JSON.parse($scope.loginCredentials);
+         console.log( $scope.secretItems);
+      } */
+      $http({
+        method: 'POST',
+        url: $base_url + '/api/user/generate_auth_cookie/?username=' + $scope.secretItems.username + '&password=' + $scope.secretItems.password + '&insecure=cool',
+        dataType: "json",
+        contentType: "application/json; charset=utf-8"
+      }).then(function success(obj) {
+        responseText = [obj.data]; // response data 
+        $scope.authItems = responseText;
+        $scope.user = responseText;
+        $scope.status = responseText[0].status;
+    
+        if (responseText[0].status === "error") {
+          isLoggedIn = false;
+          console.log('isLoggedIn', isLoggedIn);
+          //localStorage.setItem("secret", JSON.stringify($scope.loginCredentials));
+         /*  let keysToRemove = ["secret"];
+
+          for (key of keysToRemove) {
+            localStorage.removeItem(key);
+          } */
+          $timeout(function () {
+            $scope.login();
+          }, 1000);
+        } else {
+          localStorage.setItem('auth', JSON.stringify($scope.user));
+          isLoggedIn = true;
+          console.log('isLoggedIn', isLoggedIn);
+        }
+
+      })
+    }
+
+
 
 
     $http({
@@ -58,7 +105,21 @@ angular.module('starter.controllers', [])
     });
 
 
+    if (localStorage.secret !== '') {
+   
+     $scope.secretItems = JSON.parse(localStorage.getItem('secret'));
+      // $scope.checkAuth();
+      $timeout(function () {
+        $scope.checkAuth();
+      }, 2000);
+    } else {
+      $timeout(function () {
+        $scope.secretItems = JSON.parse(localStorage.getItem($scoipe.loginCredentials));
+       
 
+      }, 2000);
+      $scope.login();
+    }
 
     // Form data for the login modal
     $scope.loginData = {};
@@ -98,52 +159,7 @@ angular.module('starter.controllers', [])
     
       //});
 
-    $scope.checkAuth = function () {
-      //  $scope.myauth();
-
-      // $scope.secretItems = JSON.parse(localStorage.getItem('secret'));
-      //console.log('secretItems', $scope.secretItems);
-      if (localStorage.secret !== '') {
-        $scope.secretItems = JSON.parse(localStorage.getItem('secret'));
-        // $scope.loginCredentials = secretItems;
-      } else {
-        $scope.secretItems = JSON.parse($scope.loginCredentials);
-      }
-      $http({
-        method: 'POST',
-        url: $base_url + '/api/user/generate_auth_cookie/?username=' + $scope.loginCredentials.username + '&password=' + $scope.loginCredentials.password + '&insecure=cool',
-        dataType: "json",
-        contentType: "application/json; charset=utf-8"
-      }).then(function success(obj) {
-        responseText = [obj.data]; // response data 
-        $scope.authItems = responseText;
-        $scope.user = responseText;
-        $scope.status = responseText[0].status;
-      }).then(function success(obj) {
-        console.log('user', $scope.user);
-        console.log('Doing status', responseText[0].status);
-        if (responseText[0].status === "error") {
-          isLoggedIn = false;
-          console.log('isLoggedIn', isLoggedIn);
-          //localStorage.setItem("secret", JSON.stringify($scope.loginCredentials));
-         /*  let keysToRemove = ["secret"];
-
-          for (key of keysToRemove) {
-            localStorage.removeItem(key);
-          } */
-          $timeout(function () {
-            $scope.login();
-          }, 1000);
-        } else {
-          localStorage.setItem('auth', JSON.stringify($scope.user));
-          isLoggedIn = true;
-          console.log('isLoggedIn', isLoggedIn);
-        }
-
-      })
-    }
-
-
+    
 
 
 
@@ -158,7 +174,7 @@ $http.get("url").then(function success(response) {
   // this function will be called when the request returned error status
   
   }); */
-    $scope.checkAuth();
+    //$scope.checkAuth();
 
     // Perform the login action when the user submits the login form
     $scope.doLogin = function (loginData) {

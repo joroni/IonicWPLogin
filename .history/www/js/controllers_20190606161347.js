@@ -114,11 +114,8 @@ angular.module('starter.controllers', [])
       }, 2000);
     } else {
       $timeout(function () {
-        $scope.secretItems = JSON.parse(localStorage.getItem($scoipe.loginCredentials));
-       
-
-      }, 2000);
-      $scope.login();
+        $scope.login();
+      }, 1000);
     }
 
     // Form data for the login modal
